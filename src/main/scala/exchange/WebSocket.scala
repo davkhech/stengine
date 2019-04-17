@@ -21,8 +21,7 @@ class WebSocket(uri: String) {
   def connect(actor: ActorRef): Unit = {
     client = WebsocketClient(Uri(uri), new WebsocketHandler[String]() {
       def receive: PartialFunction[String, Unit] = {
-        case str ⇒
-          logger.info(s"<<| $str")
+        case str ⇒ actor ! str
       }
     })
     ws = client.open()
