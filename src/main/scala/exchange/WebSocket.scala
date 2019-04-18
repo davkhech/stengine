@@ -23,7 +23,7 @@ class WebSocket(uri: String) {
       def receive: PartialFunction[String, Unit] = {
         case str ⇒ actor ! str
       }
-    })
+    }, maxFramePayloadLength=2621440)
     ws = client.open()
   }
 

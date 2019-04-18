@@ -1,6 +1,7 @@
 
 import akka.actor.{Actor, ActorSystem, Props}
 import exchange.Exchange
+import helpers._
 
 
 object Main extends App {
@@ -12,7 +13,7 @@ object Main extends App {
     }
   }))
 
-  val exchange = new Exchange()
+  val exchange = Exchange()
   exchange.connect(exchangeActor)
   exchange.subscribe("XBTUSD")
 

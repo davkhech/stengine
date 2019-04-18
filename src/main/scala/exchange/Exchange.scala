@@ -1,6 +1,7 @@
 package exchange
 
 import akka.actor.{Actor, ActorRef}
+import helpers.{Command, Converters}
 
 import collection.mutable.{Map ⇒ MutMap}
 
@@ -16,7 +17,13 @@ class Exchange {
   }
 
   def subscribe(product: String): Unit = {
-    websocket ! "{\"op\": \"subscribe\", \"args\": \"trade\"}"
+    val command = Command("subscribe", Seq("trade"))
+    websocket ! Converters.commandToJson(command).toString
+  }
+
+  def unsubscribe(product: String): Unit = {
+    val command = Command("unsubscribe", Seq("trade"))
+    websocket ! Converters.commandToJson(command).toString
   }
 
   def buy = {}
@@ -30,4 +37,8 @@ class Exchange {
   def getResources = {}
 
   def close = {}
+}
+
+object Exchange {
+  def apply(): Exchange = new Exchange()
 }
